@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2021 at 07:13 AM
+-- Generation Time: Dec 11, 2021 at 05:18 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -62,6 +62,13 @@ CREATE TABLE `gaji` (
   `total_gaji` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `gaji`
+--
+
+INSERT INTO `gaji` (`kode_gaji`, `potongan`, `total_gaji`) VALUES
+(1, 500000, 5000000);
+
 -- --------------------------------------------------------
 
 --
@@ -74,6 +81,13 @@ CREATE TABLE `jabatan` (
   `gaji_pokok` int(20) NOT NULL,
   `Tunjangan` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `jabatan`
+--
+
+INSERT INTO `jabatan` (`kode_jabatan`, `nama_jabatan`, `gaji_pokok`, `Tunjangan`) VALUES
+(100, 'Staff Marketing', 4000000, 800000);
 
 -- --------------------------------------------------------
 
@@ -93,6 +107,13 @@ CREATE TABLE `karyawan` (
   `tempat_lahir` varchar(50) NOT NULL,
   `tanggal_lahir` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `karyawan`
+--
+
+INSERT INTO `karyawan` (`nip`, `kode_jabatan`, `kode_gaji`, `nama`, `jenis_kelamin`, `agama`, `alamat`, `no_telepon`, `tempat_lahir`, `tanggal_lahir`) VALUES
+(10, 100, 1, 'Yusuf', 'Laki-laki', 'Islam', 'Tegal', '088767545654', 'Tegal', '1991-04-09');
 
 --
 -- Indexes for dumped tables
@@ -142,16 +163,11 @@ ALTER TABLE `absensi`
   ADD CONSTRAINT `absensi_ibfk_1` FOREIGN KEY (`nip`) REFERENCES `karyawan` (`nip`);
 
 --
--- Constraints for table `jabatan`
---
-ALTER TABLE `jabatan`
-  ADD CONSTRAINT `jabatan_ibfk_1` FOREIGN KEY (`kode_jabatan`) REFERENCES `karyawan` (`kode_jabatan`);
-
---
 -- Constraints for table `karyawan`
 --
 ALTER TABLE `karyawan`
-  ADD CONSTRAINT `karyawan_ibfk_1` FOREIGN KEY (`kode_gaji`) REFERENCES `gaji` (`kode_gaji`);
+  ADD CONSTRAINT `karyawan_ibfk_1` FOREIGN KEY (`kode_jabatan`) REFERENCES `jabatan` (`kode_jabatan`),
+  ADD CONSTRAINT `karyawan_ibfk_2` FOREIGN KEY (`kode_gaji`) REFERENCES `gaji` (`kode_gaji`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
